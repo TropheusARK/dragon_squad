@@ -3,7 +3,7 @@ const express = require("express") /* require means to go find the package */
 const cors = require("cors") /* Gives permision to collect data from an url" */
 const mysql = require("mysql2")
 const bcrypt = require("bcrypt")
-const { use } = require("react")
+const session = require("express-session")
 
 const app = express() /* App is OUR SERVER! */
 const PORT = process.env.PORT /* The PORT we run our bakend on */
@@ -23,8 +23,19 @@ database.connect((error) => {
     }
 })
 
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true
+    }
+}))
 app.use(express.json()) /* For every request in app, parse JSON */
-app.use(cors()) /* For every request in app, allow cross-origin requests */
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+})) /* For every request in app, allow cross-origin requests */
 
 /* REQUEST AND RESPONSE */
 app.get("/", (req, res) =>{
@@ -134,6 +145,12 @@ app.post("/login", (req, res) => {
                                 })
                             } else{
                                 if (isCorrect) {
+
+                                    /* Set Up Login Data */
+
+                                    req.session.userId = results[0].id
+                                    req.session.username = results[0].displayName
+
                                     res.json({
                                         success: true,
                                         msg: "Login"
@@ -157,6 +174,23 @@ app.post("/login", (req, res) => {
             }
         }
     )
+})
+
+app.get("/me", (req, res) => {
+    
+    if (req.session.userId) {
+
+        res.json({
+            success: true,
+            userId: req.session.userId,
+            username: req.session.username
+        })
+    } else {
+        res.json({
+            success: false,
+            msg: "Not logged in"
+        })
+    }
 })
 
 app.listen(PORT, () => {

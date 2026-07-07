@@ -1,5 +1,5 @@
 import "../App.css"
-import { use, useState } from "react"
+import { useState } from "react"
 
 
 function SignInHUD(props) {
@@ -27,6 +27,7 @@ function SignInHUD(props) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: "include",
                 body: JSON.stringify({
                     username: usernameField,
                     password: passwordField
@@ -39,6 +40,7 @@ function SignInHUD(props) {
                 displayError(data.msg)
              }else {
                 console.log(data.msg)
+                props.finishLogin()
              }
              
          }else{
@@ -62,6 +64,7 @@ function SignInHUD(props) {
                     headers: {
                         "Content-Type": "application/json"
                     },
+                    credentials: "include",
                     /*  Body */
                     body: JSON.stringify({
                         username: usernameField, 
@@ -77,6 +80,7 @@ function SignInHUD(props) {
                 displayError(data.msg)
              }else {
                 console.log(data.msg)
+                props.logInClick()
              }
              
          }else{
@@ -144,6 +148,18 @@ function SignInHUD(props) {
         }
     }
 
+    function handleSubmit(event) {
+
+        event.preventDefault()
+
+        if (props.layer === "SignUp"){
+             createAccount()
+        } else {
+            login()
+        }
+
+    }
+
     return (
 
         <div className="signIn">
@@ -158,10 +174,19 @@ function SignInHUD(props) {
                 <button className="loginButtons" onClick={props.logInClick}>Login</button>
             </div>
 
-            <div className = "inputFields">
+            <form className = "inputFields" onSubmit = {handleSubmit}>
+
+                {/* Input fields */}
                {userinput( props.layer )}
                {passwordinput( props.layer )}
-            </div>
+
+                {/* Buttons */}
+                {props.layer === "SignUp" ? 
+                (<button className="loginButtons" type="submit"> Create </button>) 
+                : 
+                (<button className="loginButtons" type="submit"> Login </button>)}
+
+            </form>
             
             {errorScreen && 
                 <div className="errorMsg">
@@ -174,11 +199,6 @@ function SignInHUD(props) {
                     
                 </div>
             }
-
-            { (props.layer === "SignUp") && <div>  <button className="loginButtons" onClick={() => {createAccount()}} > Create </button> </div>}
-            { (props.layer !== "SignUp") && <div>  <button className="loginButtons" onClick={() => {login()}} > Enter </button> </div>}
-
-
 
         </div>
 

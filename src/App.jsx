@@ -1,43 +1,60 @@
 import "./App.css"
 import { useState } from "react"
 import { useEffect } from "react"
-import "./components/SignInHUD"
-import SignInHUD from "./components/SignInHUD"
+import Game from "./components/Game"
+import StartUp from "./components/StartUp"
 
 function App() {
 
-  const [isLoading, setIsLoading] = useState(true)
-  const [loginState, setLoginState] = useState("Null")
+  const [inGame, setInGame] = useState(false)
+  const [inBattle, setInBattle] = useState(false)
+  const [currentUser, setCurrentUser] = useState(null)
+  
+  useEffect(() => {checkLogin() }, []) /* empty [] means run when component first appears */
 
-  useEffect(() => {setTimeout(() => {setIsLoading(false); setLoginState("SignUp")}, 5000)}, [])
+  async function checkLogin() { /* async means the function will take time to respond */
+    const response = await fetch("http://localhost:3000/me", {
+      credentials: "include"
+    })
 
-  function loading() {
-    return isLoading && <div className="loadingWheel"></div>
-  }
+    const data = await response.json()
 
-  function loginUI() {
-    if (loginState === "Null"){
-      return false;
-    } 
-    else {
-      return <SignInHUD 
-        layer={loginState}
-        signInClick={() => {setLoginState("SignUp")}}
-        logInClick={() => {setLoginState("Login")}}
-       />
+    if (data.success) {
+      setCurrentUser({
+        id: data.userId,
+        username: data.username
+      })
+      return true
+    } else {
+      setCurrentUser(null)
+      return false
     }
   }
 
+  async function finishLogin() {
+
+    setTimeout(async () => {
+
+      const isLoggedin = await checkLogin()
+
+      if (isLoggedin) {
+        setInGame(true)
+      }
+    }, 3000)
+  }
 
   return (
-    <div className="blackScreen">
 
-      <h1 className="gameTitleTxt"> Dragon Squad</h1>
+    /* If ingame show game component, if not show login/sign up screen */
+     inGame ? 
 
-      {loading()} {/** Load Data */}
-      {loginUI()} {/** Login Pop Up */}
+     <Game 
+      currentUser={currentUser} 
+     /> : 
 
-    </div>
+     <StartUp 
+     finishLogin={finishLogin}
+     />
   )
   
 
