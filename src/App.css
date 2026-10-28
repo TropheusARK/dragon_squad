@@ -1,4 +1,15 @@
 /** MAIN */
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+
 body {
   margin: 0;
   padding: 0;
@@ -92,7 +103,7 @@ input {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-image: url(/src/images/dragon_squad_loading_screen_wip.png);
+  background-image: url(/src/images/Backdrops/dragon_squad_loading_screen_wip.png);
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
   height: 100vh
@@ -173,10 +184,695 @@ input {
 /** ------------------------------ LOBBY ----------------------------- */
 /** ------------------------------------------------------------------ */
 
+.returnButton {
+  display: flex;
+  position: absolute;
+  left: 1.5vw;
+  top: 0.5vh;
+  width: 6vw;
+  height: 10vh;
+  z-index: 100;
+  border: 1px outset rgba(73, 32, 0, 0.6);
+  border-radius: 10%;
+  box-shadow: 
+    10px 0px 20px rgb(73, 32, 0) ,
+    10px 10px 20px rgb(0, 0, 0);
+    background: linear-gradient(
+      135deg,
+      rgb(255, 215, 120) 0%,
+      rgb(239, 155, 56) 40%,
+      rgb(186, 108, 29) 60%,
+      rgb(150, 80, 20) 100%
+  );
+}
+
+.returnButton img {
+  width: 100%;
+  height: 100%;
+}
+
+
 .lobbyScreen {
   display: flex;
+  z-index: 1;
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
   height: 100vh;
-  background-image: url(/src/images/Lobby_BG.png);
+  background-image: url(/src/images/Backdrops/Lobby_BG.png);
+}
+
+.lobbyHUD {
+  display: flex;
+  position: absolute;
+  z-index: 2;
+  top: 0%;
+  left: -1%;
+  background-image: linear-gradient(to bottom, rgb(219, 192, 122), rgb(133, 94, 53));
+  height: 8.75vh;
+  width: 102vw;
+  border: 3px solid rgb(88, 59, 37);
+  box-sizing: border-box;
+  /* overflow: hidden; clips descendants */
+}
+
+.Profile {
+  display: flex;
+  position: absolute;
+  z-index: 3;
+  top: 0%;
+  left: 5%;
+  height: 12.5vh;
+  width: 7.5%;
+  border: 8px solid rgb(123, 64, 6);
+  border-radius: 15%;
+  background-image: url(/src/images/Icons/Default_Icon.png);
+  background-size: 100% 100%;
+}
+
+.nameHolder {
+  display: flex;
+  position: absolute;
+  z-index: 4;
+  top: 65%;
+  left: 8vw;
+  width: 10vw;
+  height: 30%;
+  background-image: linear-gradient(to right, rgba(33, 33, 33, 0.5), rgba(33, 33, 33, 0));
+  font-family: 'Fredoka';
+  color: white;
+}
+
+.nameHolder h1 {
+  margin-top: 3px;
+  margin-left: 12px;
+  font-size: clamp(5px, 4vw, 30px);
+}
+
+.cHolder {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  margin-left: 22.5vw;
+  top: 2.1vh;
+  font-family: 'Fredoka';
+  text-align: right;
+  color: white;
+  gap: 5vw;
+}
+
+.cHolder span {
+  color: rgb(133, 103, 77);
+}
+
+.cHolder h1 {
+  white-space: nowrap;
+  margin-top: 0%;
+  margin-left: auto;
+  margin-right: 5%;
+  font-size: clamp(2px, 2vw, 35px);
+}
+
+/* friendship points */
+.fpimage {
+  position: relative;
+  display: flex;
+  z-index: 5;
+  background-image: linear-gradient(to bottom, rgb(79, 52, 33), rgb(73, 40, 23));
+  width: 13vw;
+  height: 4.6vh;
+  border-radius: 15%;
+  justify-content: right;
+
+}
+
+.fpimage .image {
+  display: flex;
+  position: absolute;
+  z-index: 6;
+  top: -12.5%;
+  left: -12.5%;
+  width: 25%;
+  height: 125%;
+  background-image: url(/src/images/Icons/fp_point_label.png);
+  background-size: 100% 100%;
+}
+
+
+/* energy points */
+.energyimage {
+  position: relative;
+  display: flex;
+  z-index: 5;
+  background-image: linear-gradient(to bottom, rgb(79, 52, 33), rgb(73, 40, 23));
+  width: 13vw;
+  height: 4.6vh;
+  border-radius: 15%;
+  justify-content: right;
+}
+
+.energyimage .image {
+  display: flex;
+  position: absolute;
+  z-index: 6;
+  top: -12.5%;
+  left: -12.5%;
+  width: 25%;
+  height: 125%;
+  background-image: url(/src/images/Icons/energy_label.png);
+  background-size: 100% 100%;
+}
+
+/* gold */
+.goldimage {
+  position: relative;
+  display: flex;
+  z-index: 5;
+  background-image: linear-gradient(to bottom, rgb(79, 52, 33), rgb(73, 40, 23));
+  width: 13vw;
+  height: 4.6vh;
+  border-radius: 15%;
+  justify-content: right;
+}
+
+.goldimage .image {
+  display: flex;
+  position: absolute;
+  z-index: 6;
+  top: -12.5%;
+  left: -12.5%;
+  width: 25%;
+  height: 125%;
+  background-image: url(/src/images/Icons/gold_label.png);
+  background-size: 100% 100%;
+}
+
+/* gems */
+.gemsimage {
+  position: relative;
+  display: flex;
+  z-index: 5;
+  background-image: linear-gradient(to bottom, rgb(79, 52, 33), rgb(73, 40, 23));
+  width: 13vw;
+  height: 4.6vh;
+  border-radius: 15%;
+  justify-content: right;
+}
+
+.gemsimage .image {
+  display: flex;
+  position: absolute;
+  z-index: 6;
+  top: -12.5%;
+  left: -12.5%;
+  width: 25%;
+  height: 125%;
+  background-image: url(/src/images/Icons/gem_label.png);
+  background-size: 100% 100%;
+}
+
+
+/*----------------------- DRAGON DISPLAY --------------------- */
+
+.dragonDisplay {
+  display: flex;
+  position: absolute;
+  width: 200vw;
+  height: 100vh;
+  top: 0vh;
+  left: 0vw;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 0;
+}
+
+.lobbyScreen .dragonLeader {
+  display: flex;
+  position: absolute;
+  width: 26.1vw;
+  height: 39.58333333vh;
+  top: 36.45833333vh;
+  left: 45vw;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  transform: scaleX(-1);
+}
+
+
+/*----------------------- ---------------------------------------- */
+
+/* BOTTOM MENU */
+
+.dragonHUD {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  width: 100vw;
+  height: 16vh;
+  top: 83vh;
+  gap: 10vw;
+  margin-left: 1.25%;
+  z-index: 1;
+}
+
+.teamButton {
+  display: flex;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  width: 9.375vw;
+  height: 100%;
+}
+
+.teamButton img {
+  width: 100%;
+  height: 100%;
+}
+
+.teamButton div {
+  position: inherit;
+  background-color: antiquewhite;
+  width: 70%;
+  height: 20%;
+  left: 10%;
+  top: 77%;
+  border-radius: 20%;
+  background-image: linear-gradient(to bottom, rgb(79, 52, 33), rgb(73, 40, 23));
+  border: solid 4px rgb(208, 160, 98);
+}
+
+.teamButton h1 {
+  margin-top: 0%;
+  font-family: 'Fredoka';
+  color: white;
+}
+
+/* ------------ */
+/* TEAM SECTION */
+/* ------------ */
+
+.teamScreen {
+  background-color: rgb(76, 48, 23);
+  display: flex;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.teamScreen .lobbyHUD .cHolder {
+  margin-left: 40%;
+}
+
+.dragonList {
+  display: flex;
+  position: absolute;
+  background-color: rgb(243, 189, 113);
+  box-shadow: 
+    0px 0px 20px rgb(131, 65, 11) inset,
+    -5px 0px 5px rgb(0, 0, 0);
+  z-index: 2;
+  width: 45vw;
+  height: 80vh;
+  top: 15vh;
+  left: 1vw;
+}
+
+
+.dragonList .scrollingFrame {
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+  row-gap: 1vh;
+  padding: 3%;
+  box-sizing: border-box;
+  justify-content: center;
+
+  position: absolute;
+  left: 2vw;
+  top: 10.5vh;
+  width: 41vw;
+  height: 60vh;
+  background-color: rgb(218, 146, 76);
+  border-radius: 3%;
+  z-index: 2;
+ 
+}
+
+.dragonList .scrollingFrame div {
+  position: relative;
+  background-color: rgb(200, 126, 49);
+  justify-self: center;
+  align-self: center;
+  border-radius: 5%;
+  height: 15vh;
+  width: 9vw;
+  z-index: 3;
+  overflow: hidden;
+}
+
+
+.dragonSlot .profile {
+  width: 100%;
+  height: 100%;
+}
+
+.dragonList .Header {
+  position: absolute;
+  top: 1vh;
+  left: 2vw;
+  height: 7vh;
+  width: 17vw;
+  background-color: rgb(174, 91, 16);
+  border-radius: 15%;
+}
+
+.dragonList .Header h1 {
+  position: absolute;
+  color: rgb(236, 188, 98);
+  top: -20%;
+  left: 20%;
+  font-family: 'Fredoka';
+  font-size: clamp(1vw, 2vw, 2vw);
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.dragonList .removeSlot h1 {
+ text-align: center;
+ margin-top: 30%;
+ font-family: "Fredoka";
+ color: rgb(242, 202, 145);
+}
+
+.dragonList button {
+  position: absolute;
+  top:0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 5%;
+  border: solid 1px rgb(235, 172, 109);
+}
+
+.dragonList .slotCover {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: solid 5px rgb(255, 217, 2);
+
+}
+
+.dragonList h2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 11;
+}
+
+.team {
+  position: relative;
+  display: flex;
+  background-color: rgb(243, 189, 113);
+  width: 45vw;
+  height: 72.5vh;
+  top: 22.5vh;
+  left: 50vw;
+  box-shadow: 
+    0px 0px 20px rgb(131, 65, 11) inset,
+    0px 0px 5px rgb(0, 0, 0)
+  ;
+  z-index: 1;
+}
+
+.arrowTeamPick {
+  position: fixed;
+  top: -1vh;
+  left: -0.75vw;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  filter: drop-shadow(-3px 5px 5px rgba(71, 26, 0, 0.8));
+  animation: upAndDown infinite 1.5s;
+}
+
+@keyframes upAndDown {
+  0% {
+    transform: translateY(-10px);
+  } 
+  50%{
+    transform: translateY(0px);
+  } 
+  100% {
+    transform: translateY(-10px);
+  } 
+}
+
+.team .rank {
+  position: absolute;
+  display: flex;
+  top: 5%;
+  left: 5%;
+  width: 40%;
+  height: 8%;
+  background-color: rgb(179, 107, 29);
+  border-radius: 7.5%;
+  z-index: 2;
+}
+
+.team .type {
+  position: absolute;
+  display: flex;
+  top: 5%;
+  left: 55%;
+  width: 40%;
+  height: 8%;
+  background-color: rgb(179, 107, 29);
+  border-radius: 7.5%;
+  z-index: 2;
+}
+
+/*  ---------------TEXT--------------- */
+.team h2 {
+  font-family: 'Fredoka';
+  white-space: no-wrap;
+  font-size: clamp(1.5vw, 15px, 2vw);
+  margin-top: 3%;
+  margin-left: 2.5%;
+  color: rgb(231, 203, 121);
+}
+
+.team h1 {
+  font-family: 'Fredoka';
+  font-size: clamp(2.75vw, 30px, 4vw);
+  margin-top: -2%;
+  margin-left: auto;
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.6);
+  color: blueviolet;
+  margin-right: 5%;
+}
+
+.team p {
+  font-family: 'Fredoka';
+  z-index: 100;
+}
+
+/*  --------- LEADER SLOT ----------- */
+
+.team .leaderSlot .title {
+  position: absolute;
+  top: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgb(170, 104, 28);
+  font-size: clamp(10px, 25px, 30px);
+}
+
+
+.team .leaderSlot {
+  display: flex;
+  position: absolute;
+  border-radius: 5%;
+  left: 5%;
+  top: 16%;
+  width: 90%;
+  height: 20%;
+  background-color: rgb(216, 153, 78);
+}
+
+.team .leaderSlot .picSlot {
+  display: flex;
+  position: absolute;
+  left: 0.75%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 19%;
+  height: 95%;
+  z-index: 5;
+}
+
+.team .leaderSlot button {
+  display: flex;
+  position: absolute;
+  border-radius: 5%;
+
+  left: 0.75%;
+  top: 50%;
+  transform: translateY(-50%);
+  width:19%;
+  height: 95%;
+  z-index: 4;
+}
+
+.team .leaderSlot .skills {
+
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  gap:2.5%;
+
+  left: 25%;
+  top: 27.5%;
+
+  width: 35%;
+  height: 35%;
+
+  background-color: rgba(0, 0, 0, 0) ;
+  z-index: 5 ;
+}
+
+.team .leaderSlot .skills div {
+
+  display: flex;
+  background-color: antiquewhite;
+
+  width: 22.5%;
+  height: 100%;
+  z-index: 6;
+}
+
+.team .leaderSlot .stats {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  gap: 1%;
+
+  top: 67.5%;
+  left: 20%;
+
+  height: 28.5%;
+  width: 80%;
+
+  z-index: 5 ;
+
+}
+
+.team .leaderSlot .stats div {
+  display: flex;
+  align-items: center;
+  border-radius: 10%;
+  background-color: rgb(179, 107, 29);
+  width: 24%;
+}
+
+.team .leaderSlot .stats p {
+  font-family: 'Fredoka';
+  color: rgb(255, 227, 200);
+  font-size:x-large;
+  text-shadow: 2px 2px 5px rgb(0, 0, 0);
+}
+
+.team .leaderSlot .stats img {
+  width: 25%;
+  height: 100%;
+}
+
+/**----------- Support Slots--------- **/
+
+.team .supportSlots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  position: relative;
+  column-gap: 2vw;;
+  left: 5%;
+  top: 37%;
+  width: 150%;
+  height: 30%;
+}
+
+.team .supportSlots .stats {
+
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  background-color: rgb(176, 107, 28);
+  border-radius: 5%;
+
+  top: 66%;
+  width: 65%;
+  height: 30%;
+  left: 30%;
+  z-index: 5 ;
+}
+
+.team  .supportSlots .stats div {
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50%;
+}
+
+.team  .supportSlots .stats p {
+
+  color: rgb(255, 227, 200);
+  font-family: "Fredoka";
+  font-size: x-large;
+  text-shadow: 2px 2px rgb(0, 0, 0);
+
+}
+
+.team .supportSlots button {
+
+  display: flex;
+  position: absolute;
+  border-radius: 5%;
+
+  left: 5%;
+  top: 5%;
+  width:60%;
+  height: 55%;
+  z-index: 4;
+}
+
+.team .supportSlots img {
+
+  width: 25%;
+  height: 100%;
+}
+
+.team .supportSlots .skill {
+  display: flex;
+  position: absolute;
+  left: -40%;
+  width: 35%;
+  height: 80%;
+}
+
+.team .supportSlots .slot2, 
+.team .supportSlots .slot3,
+.team .supportSlots .slot4 {
+ 
+  position: relative;
+  width: auto;
+  height: 100%;
+  background-color: rgb(217, 152, 76);
+  border-radius: 5%;
 }

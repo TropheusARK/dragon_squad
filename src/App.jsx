@@ -3,12 +3,14 @@ import { useState } from "react"
 import { useEffect } from "react"
 import Game from "./components/Game"
 import StartUp from "./components/StartUp"
+import usePlayerData from "./components/usePlayerData"
 
 function App() {
 
   const [inGame, setInGame] = useState(false)
   const [inBattle, setInBattle] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
+  const playerData = usePlayerData()
   
   useEffect(() => {checkLogin() }, []) /* empty [] means run when component first appears */
 
@@ -24,6 +26,7 @@ function App() {
         id: data.userId,
         username: data.username
       })
+      playerData.retrieveData()
       return true
     } else {
       setCurrentUser(null)
@@ -46,10 +49,10 @@ function App() {
   return (
 
     /* If ingame show game component, if not show login/sign up screen */
-     inGame ? 
+     inGame === true ? 
 
      <Game 
-      currentUser={currentUser} 
+      currentUser={currentUser} playerData={playerData}
      /> : 
 
      <StartUp 

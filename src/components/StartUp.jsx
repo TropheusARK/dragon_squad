@@ -10,6 +10,7 @@ function StartUp(props) {
 
     useEffect(() => {setTimeout(() => {setIsLoading(false); setLoginState("SignUp")}, 5000)}, [])
     
+
     function loading() {
         return isLoading && <div className="loadingWheel"></div>
       }
